@@ -16,6 +16,8 @@ with open('static/test.csv','r') as csvinput:
                     new_col += '0'
                 elif re.search("^White", row[5]):
                     new_col += '1'
+                elif re.search("^Brown", row[5]):
+                    new_col += '2'
                 else:
                     new_col = 'x'
         
@@ -56,7 +58,8 @@ with open('static/test.csv','r') as csvinput:
         writer.writerows(all)
 
         # 00 Cat Black 
-        # 01 Cat White 
+        # 01 Cat White
+        # 02 Cat Brown 
         #  
         # 10 Dog Black 
         # 11 Dog White 
