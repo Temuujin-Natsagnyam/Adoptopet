@@ -24,9 +24,9 @@ def search(colour, gender, name, animal, flag):
             if  matcher(row, colour, gender, name, animal):
                 data.append(row)
     
-    if flag == "pop":
+    if flag == "pop":  #curate the pets by popularity
         data.sort(key=itemgetter(8), reverse=True)
-    elif flag == "alph":
+    elif flag == "alph": #curate the pets alphabetically
         data.sort(key=itemgetter(1))
 
     return data
@@ -79,25 +79,25 @@ def index():
 @app.route("/result", methods=["GET"])
 def result():
 
-    if request.args.get("updoot") == '1':
+    if request.args.get("updoot") == '1':   # route if updoot is clicked
         pet = request.args.get("pet")
         add_updoot(pet)
-        global data
-        return render_template(
+        global data                         # show the user the same page once upvotes clicked
+        return render_template(             # so use data variable from previous load   
             "result.html", data=data)
 
-    gender = request.args.get("gender")
+    gender = request.args.get("gender")    # Store all get requests in variables
     animal = request.args.get("animal")
-    colour = request.args.get("colour")
-    name = request.args.get("name")
+    colour = request.args.get("colour")    # the current input the user has
+    name = request.args.get("name")         
     sort_flag = request.args.get("sort")
 
-    if  request.args.get("auto") == '1':
-        names, colours = get_auto_sugg(name, colour)
+    if  request.args.get("auto") == '1':   # route if autocomplete is requested
+        names, colours = get_auto_sugg(name, colour)  # get arrays of suggestions from current user input
         
-        if colour == '' and name == '':
-            return render_template(
-                "index.html", names=[], colours=[])
+        if colour == '' and name == '':    # avoid autosuggesting whole dataset when searching for ""
+            return render_template( 
+                "index.html", names=[], colours=[]) #TODO resolve blank inputs inside get_auto_sugg function instead of here
         
         elif colour == '':
             return render_template(
@@ -111,7 +111,7 @@ def result():
             "index.html", names=names, colours=colours
         )
 
-    data = search(colour, gender, name, animal, sort_flag)
+    data = search(colour, gender, name, animal, sort_flag)     # route for normal requests
     return render_template(
         "result.html",
         data=data)
@@ -119,7 +119,3 @@ def result():
 if __name__ == "__main__":
     app.run(debug=True)
 #END
-
-#todo add seperate submit button to get auto suggestions       DONE
-#todo sort by alphabet, or popular
-#todo if input field is blank, dont get autosuggest            DONE
