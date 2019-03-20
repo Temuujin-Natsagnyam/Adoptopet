@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+ .big-btn {
+        width: 90px;
+        height: 40px;
+    }
+</style>
+</head>
+
+<body>
+    <h1 style="text-align: center">Where is my pet!</h1>
+    <h2 style="text-align: center">Find out if your lost pet has ended up in a rescue centre.</h2>
+    <div>
+    <form method="GET" action="{{ url_for('result') }}">
+        <table bgcolor="#bdc0ff" cellpadding="6" align="center">
+            <tbody>
+                <tr>
+                    <td>Name:</td>
+                    <datalist id="names">
+                        {% for n in names%}
+                        <option value= "{{n}}">
+                        {% endfor %}                      
+                        </datalist>
+                    <td><input type="text" name="name" autocomplete='off' list='names'></td>
+                </tr>
+                <tr>
+                    <td>Colour:</td>
+                    <datalist id="colours">
+                        {% for c in colours%}
+                        <option value= "{{c}}">
+                        {% endfor %}
+                        </datalist>
+                    <td><input type="text" name="colour" autocomplete='off' list='colours' ></td>
+                </tr>
+                <tr>
+                    <td>Gender:</td>
+                    <td><select name="gender">
+                            <option value="all">all</option>                       
+                            <option value="Male">male</option>
+                            <option value="Female">female</option>
+                            <option value="Intact Female">intact_female</option>
+                            <option value="Intact Male">intact_male</option>
+                            <option value="Neutered Male">neutered_male</option>
+                            <option value="Spayed Female">spayed_female</option>
+                            <option value="Unaltered">unaltered</option>
+                            <option value="Unknown">unknown</option>   
+                        </select></td>
+                </tr>
+                <tr>
+                    <td>Animal:</td>
+                    <td><select name="animal">
+                            <option value="all">all</option>                    
+                            <option value="Dog">Dog</option>
+                            <option value="Cat">Cat</option> 
+                            <option value="Bird">Bird</option> 
+                            <option value="Rabbit">Rabbit</option> 
+                        </select></td>
+                    </tr>                
+                <tr>
+                        <td>Autocomplete suggest</td>
+                        <td><input type="checkbox" name="auto" value="1"></td>
+                    </tr>
+                <tr>
+                        <td>Sort by:</td>
+                        <td><input type="radio" name="sort" value="pop"> Popular
+                            <input type="radio" name="sort" value="alph"> A-Z
+                            <br><input type="radio" name="sort" value="none" checked="checked"> No sort</td>
+                    </tr>
+                <tr>
+                <td><input class="button" type="submit" name="submit" value="Get Autosuggestions" style="width:170px;height:30px;"></td>
+                <td><input class="button" type="submit" name="submit" value="Submit" style="width:170px;height:30px;"></td>
+                </tr>
+            </tbody>
+        </table>
+      </form>
+    </div>
+    <br>
+    <br>
+    <h4>Developer stuff:</h4>
+    <a>The colour array being fed into the jinja template: {{colours}}</a>
+    <br>
+    <br>
+    <a>The name array being fed into the jinja template: {{names}}</a>
+</body>
+</html>
